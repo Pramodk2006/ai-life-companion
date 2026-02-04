@@ -3,6 +3,11 @@
 // Cloud deployment entry point for AI Companion
 const AICompanion = require('./src/index');
 
+#!/usr/bin/env node
+
+// Cloud deployment entry point for AI Companion
+const AICompanion = require('./src/index');
+
 async function startCloudMode() {
     console.log('🌐 Starting AI Companion in CLOUD MODE...');
     console.log('📡 24/7 Always-On Proactive Messaging Enabled');
@@ -15,6 +20,8 @@ async function startCloudMode() {
     
     try {
         await companion.initialize();
+        await companion.start(); // Start the Express server!
+        
         console.log('\n✅ AI Companion deployed successfully!');
         console.log('🚀 System is now running 24/7 in the cloud');
         console.log('📱 Proactive messages will be sent to:', process.env.USER_PHONE);
@@ -26,19 +33,20 @@ async function startCloudMode() {
         
     } catch (error) {
         console.error('❌ Failed to start AI Companion:', error.message);
+        console.error('Full error:', error);
         process.exit(1);
     }
 
     // Handle graceful shutdown for cloud deployments
     process.on('SIGTERM', async () => {
         console.log('🛑 Received SIGTERM, shutting down gracefully...');
-        await companion.shutdown();
+        if (companion.shutdown) await companion.shutdown();
         process.exit(0);
     });
 
     process.on('SIGINT', async () => {
         console.log('🛑 Received SIGINT, shutting down gracefully...');
-        await companion.shutdown();
+        if (companion.shutdown) await companion.shutdown();
         process.exit(0);
     });
 }

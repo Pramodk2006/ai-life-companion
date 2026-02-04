@@ -22,6 +22,9 @@ class AICompanion {
         try {
             logger.info('🚀 Starting AI Companion System...');
             
+            // Check critical environment variables
+            this.checkEnvironment();
+            
             // Initialize core components
             this.memory = new MemoryManager();
             await this.memory.initialize();
@@ -44,8 +47,32 @@ class AICompanion {
             return this;
         } catch (error) {
             logger.error('❌ Failed to initialize AI Companion:', error);
-            process.exit(1);
+            console.error('❌ Detailed error:', error);
+            throw error; // Don't process.exit here, let the caller handle it
         }
+    }
+
+    checkEnvironment() {
+        const required = ['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
+        const missing = required.filter(key => !process.env[key]);
+        
+        if (missing.length > 0) {
+            const error = `Missing required environment variables: ${missing.join(', ')}`;
+            logger.error('❌ Environment check failed:', error);
+            console.error('❌ Environment check failed:', error);
+            console.error('💡 Please set these environment variables in your deployment platform');
+            throw new Error(error);
+        }
+        
+        const optional = ['OPENAI_API_KEY', 'USER_NAME', 'USER_PHONE'];
+        const missingOptional = optional.filter(key => !process.env[key]);
+        
+        if (missingOptional.length > 0) {
+            logger.warn(`⚠️  Optional environment variables not set: ${missingOptional.join(', ')}`);
+            console.warn(`⚠️  Optional environment variables not set: ${missingOptional.join(', ')}`);
+        }
+        
+        logger.info('✅ Environment variables validated');
     }
 
     setupRoutes() {

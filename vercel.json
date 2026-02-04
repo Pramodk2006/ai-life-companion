@@ -1,14 +1,14 @@
 {
   "version": 2,
   "functions": {
-    "start-cloud.js": {
+    "src/index.js": {
       "runtime": "nodejs18.x"
     }
   },
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/start-cloud.js"
+      "dest": "/src/index.js"
     }
   ],
   "env": {
