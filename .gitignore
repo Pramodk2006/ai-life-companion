@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+logs/
+.wwebjs_auth/
+.wwebjs_cache/
+session/
+.DS_Store
+*.tmp
+*.temp
+dist/
+build/
