@@ -3,11 +3,6 @@
 // Cloud deployment entry point for AI Companion
 const AICompanion = require('./src/index');
 
-#!/usr/bin/env node
-
-// Cloud deployment entry point for AI Companion
-const AICompanion = require('./src/index');
-
 async function startCloudMode() {
     console.log('🌐 Starting AI Companion in CLOUD MODE...');
     console.log('📡 24/7 Always-On Proactive Messaging Enabled');
