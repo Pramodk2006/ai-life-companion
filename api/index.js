@@ -1,4 +1,4 @@
-const AICompanion = require('../src/index');
+import AICompanion from '../src/index.js';
 
 let companion = null;
 
@@ -25,7 +25,7 @@ async function initCompanion() {
 }
 
 // Serverless function handler
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
     try {
         const comp = await initCompanion();
         
